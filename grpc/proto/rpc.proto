@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package grpctest;
+
+service SendServer {
+  rpc SayTest (TestRequest) returns (TestReply) {}
+}
+
+message TestRequest {
+  string name = 1;
+}
+
+message TestReply {
+  int32 code = 1;
+}

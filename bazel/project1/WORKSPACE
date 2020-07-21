@@ -1,0 +1,33 @@
+workspace(name = "bazel_test")
+
+
+# external lib:
+#   https://docs.bazel.build/versions/1.2.0/external.html
+local_repository(
+    name = "from_project2",
+    path = "../project2",
+)
+
+
+# 需要 load 库的范围：
+#   A依赖于B，B依赖于C，那么A的WORKSPACE需要同时给出 B、C，以防止：
+
+
+
+# HTTP：https://docs.bazel.build/versions/1.2.0/repo/http.html
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "com_google_googletest",
+    urls = ["https://github.com/google/googletest/archive/v1.10.x.zip"],
+
+    # 如果需要设置 gtest的build文件，build_file = "@//:gtest.BUILD
+    #   https://docs.bazel.build/versions/1.2.0/cpp-use-cases.html#including-external-libraries
+
+    # 使用此目录作为前缀，解压后多来一层目录，external/name/other dir/WORKSPACE
+    #       如不设置，后续就找不到这个库了：external/com_google_googletest/googletest-1.10.x
+    #           访问需要加前缀：@com_google_googletest//googletest-1.10.x:gtest_main
+    #       设置之后，直接去掉了此前缀，只有：external/com_google_googletest/
+    #
+    #   查看 external 路径：ls $(bazel info output_base)/external
+    strip_prefix = "googletest-1.10.x",
+)

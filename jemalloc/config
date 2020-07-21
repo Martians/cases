@@ -1,0 +1,6 @@
+
+--nobig
+-limit=1000
+-lang=www
+
+--flagfile=../config2
