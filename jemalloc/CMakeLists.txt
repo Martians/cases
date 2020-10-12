@@ -26,20 +26,10 @@ endif()
 include_directories(../../3rd/include)
 link_directories(../../3rd/lib)
 
-
-
-FIND_LIBRARY(GFLAGS gflags)
-IF(NOT GFLAGS)
-    MESSAGE(FATAL_ERROR “gflags not found”)
-else()
-    MESSAGE("gflags path:  " ${GFLAGS})
-ENDIF(NOT GFLAGS)
-
-
 file(GLOB srcs *.cpp)
 
 ## 将所有依赖库放在一起
-set(EXTRA_LIBS ${EXTRA_LIBS} gflags)
+set(EXTRA_LIBS "jemalloc")
 
 add_executable(client ${srcs})
 target_link_libraries (client ${EXTRA_LIBS})
